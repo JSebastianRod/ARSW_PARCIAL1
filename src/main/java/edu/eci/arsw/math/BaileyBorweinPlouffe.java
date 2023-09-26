@@ -4,7 +4,6 @@ public class BaileyBorweinPlouffe extends Thread{
     private int start;
     private int count;
     private byte[] digits;
-    private int N;
     
     
     public BaileyBorweinPlouffe(int start, int count) {
@@ -17,7 +16,7 @@ public class BaileyBorweinPlouffe extends Thread{
     
     public void run() {
         System.out.println("Thread running " + Thread.currentThread().getName());
-        System.out.println((PiDigits.getDigits(start, count, N)));
+        digits = (PiDigits.getDigits(start, count, 0));
         
     }
 

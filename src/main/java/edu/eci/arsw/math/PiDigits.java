@@ -1,5 +1,8 @@
 package edu.eci.arsw.math;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 ///  <summary>
 ///  An implementation of the Bailey-Borwein-Plouffe formula for calculating hexadecimal
 ///  digits of pi.
@@ -10,6 +13,7 @@ public class PiDigits {
 
     private static int DigitsPerSum = 8;
     private static double Epsilon = 1e-17;
+    private static ArrayList<BaileyBorweinPlouffe> threads = new ArrayList<BaileyBorweinPlouffe>();
 
     /**
      * Returns a range of hexadecimal digits of pi.
@@ -26,43 +30,72 @@ public class PiDigits {
     }
 
     public static byte[] getDigits(int start, int count, int N) {
-        for (int i = 0; i < N; i++) {
-            for (int j = N; j != i; j--) {
-                count = count / j;
-                BaileyBorweinPlouffe bbp = new BaileyBorweinPlouffe(start, count);
-                bbp.start();
-                start += count;
-                count = count * j;
+
+        if(N != 0) {
+            int work4Thread = count / N;
+            int add = count % N;
+            int starti = start;
+            for(int i = 0; i < N; i++) {
+                if(i == N-1){
+                BaileyBorweinPlouffe thread = new BaileyBorweinPlouffe(starti, work4Thread);
+                threads.add(thread);
+                thread.start();
+                starti = starti + work4Thread+add;
+
+                }else{
+                    BaileyBorweinPlouffe thread = new BaileyBorweinPlouffe(starti, work4Thread);
+                threads.add(thread);
+                thread.start();
+                starti = starti + work4Thread;
+                }
+                
+                
             }
+            byte[] digits = new byte[count];
+            int countd = 0;
+            for( BaileyBorweinPlouffe thread : threads ){
+               try {
+                thread.join();
+                for( byte digit : thread.getDigits() ) {
+                    digits[countd] = digit;
+                    countd++;
+                }
+                
+               } catch (Exception e) {
+                System.out.println(e);
+               }
+            }
+            return digits;
+
             
-
-        }
-        if (start < 0) {
-            throw new RuntimeException("Invalid Interval");
-        }
-
-        if (count < 0) {
-            throw new RuntimeException("Invalid Interval");
-        }
-
-        byte[] digits = new byte[count];
-        double sum = 0;
-
-        for (int i = 0; i < count; i++) {
-            if (i % DigitsPerSum == 0) {
-                sum = 4 * sum(1, start)
-                        - 2 * sum(4, start)
-                        - sum(5, start)
-                        - sum(6, start);
-
-                start += DigitsPerSum;
+        }else {
+            if (start < 0) {
+                throw new RuntimeException("Invalid Interval");
             }
-
-            sum = 16 * (sum - Math.floor(sum));
-            digits[i] = (byte) sum;
+    
+            if (count < 0) {
+                throw new RuntimeException("Invalid Interval");
+            }
+    
+            byte[] digits = new byte[count];
+            double sum = 0;
+    
+            for (int i = 0; i < count; i++) {
+                if (i % DigitsPerSum == 0) {
+                    sum = 4 * sum(1, start)
+                            - 2 * sum(4, start)
+                            - sum(5, start)
+                            - sum(6, start);
+    
+                    start += DigitsPerSum;
+                }
+    
+                sum = 16 * (sum - Math.floor(sum));
+                digits[i] = (byte) sum;
+            }
+    
+            return digits;
         }
-
-        return digits;
 
     }
 

@@ -15,11 +15,13 @@ public class Main {
 
     public static void main(String a[]) {
 
-        System.out.println(bytesToHex(PiDigits.getDigits(0, 1000,5)));
+        //System.out.println(bytesToHex(PiDigits.getDigits(0, 1000,5)));
         System.out.println(bytesToHex(PiDigits.getDigits(1, 100,7)));
-        System.out.println(bytesToHex(PiDigits.getDigits(1, 1000000,20)));
+        System.out.println(bytesToHex(PiDigits.getDigits(1, 100,0)));
+        //System.out.println(bytesToHex(PiDigits.getDigits(1, 1000000,20)));
+        
 
-        /*BaileyBorweinPlouffe bbp = new BaileyBorweinPlouffe(0, 10);
+        /*
         BaileyBorweinPlouffe bbp1 = new BaileyBorweinPlouffe(1, 100);
         BaileyBorweinPlouffe bbp2 = new BaileyBorweinPlouffe(1, 10000);
         bbp.start();
