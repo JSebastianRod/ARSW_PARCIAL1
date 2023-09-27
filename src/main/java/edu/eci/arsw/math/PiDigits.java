@@ -3,8 +3,10 @@ package edu.eci.arsw.math;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Timer;
 import java.util.TimerTask;
+
+import java.util.Timer;
+
 
 ///  <summary>
 ///  An implementation of the Bailey-Borwein-Plouffe formula for calculating hexadecimal
@@ -65,7 +67,7 @@ public class PiDigits {
                         thread.stopThread();
                     }
                     for (BaileyBorweinPlouffe thread : threads) {
-                        System.out.println("El hilo: " + " Encontro los siguientes numeros: " + contadorThreads[0]);
+                        System.out.println("El hilo: " + " Encontró los siguientes números: " + contadorThreads[0]);
                     }
                     System.out.println("Presione enter para continuar. ");
                     String read;
@@ -73,13 +75,13 @@ public class PiDigits {
                     read = scanner.nextLine();
                     if (read != null) {
                         scanner.close();
-                        System.out.println("Continuando Busqueda...");
+                        System.out.println("Continuando Búsqueda...");
                         synchronized (threads) {
                             threads.notifyAll();
                         }
                     }
                 }
-            }, 1);
+            }, 2000);
 
             byte[] digits = new byte[count];
             int countd = 0;
