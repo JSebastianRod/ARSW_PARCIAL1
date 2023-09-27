@@ -4,6 +4,7 @@ public class BaileyBorweinPlouffe extends Thread{
     private int start;
     private int count;
     private byte[] digits;
+    private static Object lock = new Object();
     
     
     public BaileyBorweinPlouffe(int start, int count) {
@@ -12,10 +13,7 @@ public class BaileyBorweinPlouffe extends Thread{
 
     }
 
-
-    
     public void run() {
-        System.out.println("Thread running " + Thread.currentThread().getName());
         digits = (PiDigits.getDigits(start, count, 0));
         
     }
@@ -23,5 +21,16 @@ public class BaileyBorweinPlouffe extends Thread{
     public byte[] getDigits() {
         return digits;
     }
+    
+    public static void stopThread() {
+        synchronized (lock) {
+            try {
+                lock.wait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     
 }

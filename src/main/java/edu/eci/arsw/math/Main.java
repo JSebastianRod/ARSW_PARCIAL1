@@ -15,26 +15,9 @@ public class Main {
 
     public static void main(String a[]) {
 
-        //System.out.println(bytesToHex(PiDigits.getDigits(0, 1000,5)));
-        System.out.println(bytesToHex(PiDigits.getDigits(1, 100,7)));
+        System.out.println(bytesToHex(PiDigits.getDigits(1, 10000,7)));
         System.out.println(bytesToHex(PiDigits.getDigits(1, 100,0)));
-        //System.out.println(bytesToHex(PiDigits.getDigits(1, 1000000,20)));
         
-
-        /*
-        BaileyBorweinPlouffe bbp1 = new BaileyBorweinPlouffe(1, 100);
-        BaileyBorweinPlouffe bbp2 = new BaileyBorweinPlouffe(1, 10000);
-        bbp.start();
-        bbp1.start();
-        bbp2.start();
-        try {
-            bbp.join();
-            bbp1.join();
-            bbp2.join();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
